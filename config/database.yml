@@ -25,7 +25,7 @@ test:
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL']
+  url: <%= ENV['DATABASE_URL'] %>
 
 queue:
   <<: *default
