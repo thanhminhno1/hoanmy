@@ -1,0 +1,46 @@
+<h1>DANH SÁCH BẢO LÃNH VIỆN PHÍ</h1>
+
+<div class="mb-3">
+  <%= link_to 'Thêm Bệnh Nhân', new_partiant_tracking_path, class: 'btn btn-primary' %>
+</div>
+
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Họ và tên</th>
+      <th>Phân loại dịch vụ</th>
+      <th>Phòng</th>
+      <th>Khoa</th>
+      <th>Số điện thoại</th>
+      <th>Công ty Bảo Hiểm</th>
+      <th>Ghi chú</th>
+      <th>Thời gian yêu cầu</th>
+      <th>Thời gian gửi YCBL</th>
+      <th>Thời gian BHQT xác nhận</th>
+      <th>Trạng thái</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @partiant_trackings.each do |partiant| %>
+      <tr>
+        <td><%= partiant.id %></td>
+        <td><%= partiant.name %></td>
+        <td><%= partiant.service_type %></td>
+        <td><%= partiant.room %></td>
+        <td><%= partiant.department&.name %></td>
+        <td><%= partiant.phone %></td>
+        <td><%= partiant.insurance_company %></td>
+        <td><%= partiant.note %></td>
+        <td><%= partiant.request_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
+        <td><%= partiant.send_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
+        <td><%= partiant.insurance_confirm_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
+        <td><%= partiant.insurance_status %></td>
+        <td>
+          <%= link_to 'Sửa', edit_partiant_tracking_path(partiant), class: 'btn btn-sm btn-warning' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

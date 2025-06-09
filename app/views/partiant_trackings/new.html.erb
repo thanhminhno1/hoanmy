@@ -1,0 +1,41 @@
+<%= link_to "Back", partiant_trackings_path || root_path, class: "btn btn-secondary" %>
+<%= form_with model: @partiant_tracking do |form| %>
+  <legend>Bảo lãnh viện phí</legend>
+
+  <div class="mb-3">
+    <%= form.label :service_type, "Dịch Vụ", class: "form-label" %>
+    <%= form.select :service_type, options_for_select([["Chờ xác nhận", "normal"], ["Quốc tế từ đầu", "premium"]]), class: "form-select" %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :name, "Họ và tên", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :room, "Phòng", class: "form-label" %>
+    <%= form.text_field :room, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :partiant_id, "SỐ ID", class: "form-label" %>
+    <%= form.text_field :partiant_id, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :phone, "SỐ điện thoại", class: "form-label" %>
+    <%= form.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :insurance_company, "Công ty bảo hiểm", class: "form-label" %>
+    <%= form.text_field :insurance_company, class: "form-control" %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :note, "Ghi chú", class: "form-label" %>
+    <%= form.text_area :note, class: "form-control" %>
+  </div>
+  
+  <%= form.submit "Submit", class: "btn btn-primary" %>
+<% end %>
