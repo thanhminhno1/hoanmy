@@ -2,13 +2,19 @@
 
 <div class="mb-3">
   <%= link_to 'Thêm Bệnh Nhân', new_partiant_tracking_path, class: 'btn btn-primary' %>
-  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+  <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-danger" %>
+</div>
+
+<div class="mb-3">
+  <%= search_form_for @q, url: partiant_trackings_path, method: :get, class: "d-flex mb-3" do |f| %>
+    <%= f.search_field :name_or_service_type_or_room_or_phone_or_insurance_company_or_note_cont, placeholder: "Tìm kiếm...", class: "form-control me-2" %>
+    <%= f.submit "Tìm kiếm", class: "btn btn-primary" %>
+  <% end %>
 </div>
 
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Họ và tên</th>
       <th>Phân loại dịch vụ</th>
       <th>Phòng</th>
@@ -19,16 +25,18 @@
       <th>Thời gian yêu cầu</th>
       <th>Thời gian gửi YCBL</th>
       <th>Thời gian BHQT xác nhận</th>
+      <th>Nhân viên xử lý</th>
       <th>Trạng thái</th>
-      <th></th>
+      <% if current_user.admin? %>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% @partiant_trackings.each do |partiant| %>
       <tr>
-        <td><%= partiant.id %></td>
         <td><%= partiant.name %></td>
-        <td><%= partiant.service_type %></td>
+        <td><%= partiant.service_type == "premium" ? "Quốc tế từ đầu" : "Chờ xác nhận" %></td>
         <td><%= partiant.room %></td>
         <td><%= partiant.department&.name %></td>
         <td><%= partiant.phone %></td>
@@ -37,11 +45,31 @@
         <td><%= partiant.request_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
         <td><%= partiant.send_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
         <td><%= partiant.insurance_confirm_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
-        <td><%= partiant.insurance_status %></td>
+        <td><%= partiant.assignee %></td>
         <td>
-          <%= link_to 'Sửa', edit_partiant_tracking_path(partiant), class: 'btn btn-sm btn-warning' %>
+          <%= 
+            case partiant.insurance_status
+            when "pending"
+              "Đang chờ"
+            when "rejected"
+              "Từ chối bảo lãnh"
+            when "confirmed"
+              "Được bảo lãnh"
+            else
+              "Không xác định"
+            end
+          %>
         </td>
+        <% if current_user.admin? %>
+          <td>
+            <%= link_to 'Sửa', edit_partiant_tracking_path(partiant), class: 'btn btn-sm btn-warning' %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-center">
+  <%= paginate @partiant_trackings %>
+</div>

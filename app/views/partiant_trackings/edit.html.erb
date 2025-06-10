@@ -1,0 +1,63 @@
+<h1>Cập nhật thông tin bệnh nhân</h1>
+
+<%= link_to "Back", partiant_trackings_path, class: "btn btn-secondary mb-3" %>
+<%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger mb-3" %>
+
+<%= form_with model: @partiant_tracking, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, "Họ và tên", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :service_type, "Dịch Vụ", class: "form-label" %>
+    <%= form.select :service_type, options_for_select([["Chờ xác nhận", "normal"], ["Quốc tế từ đầu", "premium"]], @partiant_tracking.service_type), {}, {class: "form-select mb-3"} %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :room, "Phòng", class: "form-label" %>
+    <%= form.text_field :room, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :partiant_id, "SỐ ID", class: "form-label" %>
+    <%= form.text_field :partiant_id, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :phone, "SỐ điện thoại", class: "form-label" %>
+    <%= form.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :insurance_company, "Công ty bảo hiểm", class: "form-label" %>
+    <%= form.text_field :insurance_company, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :send_time, "Thời gian gửi YCBL", class: "form-label" %>
+    <%= form.text_field :send_time, class: "form-control", data: { controller: "datetime-picker" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :insurance_confirm_time, "Thời gian BHQT xác nhận", class: "form-label" %>
+    <%= form.text_field :insurance_confirm_time, class: "form-control", data: { controller: "datetime-picker" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :note, "Ghi chú", class: "form-label" %>
+    <%= form.text_area :note, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :assignee, "Nhân viên xử lý", class: "form-label" %>
+    <%= form.text_field :assignee, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :insurance_status, "Trạng thái", class: "form-label" %>
+    <%= form.select :insurance_status, options_for_select([["Đang chờ", "pending"], ["Từ chối bảo lãnh", "rejected"], ["Được bảo lãnh", "confirmed"]], @partiant_tracking.insurance_status), {}, {class: "form-select mb-3"} %>
+  </div>
+
+  <%= form.submit "Update", class: "btn btn-primary" %>
+<% end %>

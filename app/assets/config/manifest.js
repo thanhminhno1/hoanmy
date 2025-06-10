@@ -1,0 +1,11 @@
+//= link_tree ../images
+//= link_directory ../../javascript
+//= link_tree ../builds
+//= link bootstrap.bundle.min.js
+//= link application.js
+//= link @popperjs--core.js
+//= link controllers/application.js
+//= link controllers/hello_controller.js
+//= link controllers/index.js
+//= link flatpickr.js
+//= link controllers/datetime_picker_controller.js

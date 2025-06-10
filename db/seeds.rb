@@ -6,16 +6,24 @@
   #
   [
     {
+      name: "Quốc tế",
+      email: "quocte",
+      role: "admin"
+    },
+    {
       name: "Ngoại",
-      email: "ngoai"
+      email: "ngoai",
+      role: "normal"
     },
     {
       name: "Nhi",
-      email: "nhi"
+      email: "nhi",
+      role: "normal"
     },
     {
       name: "Nội",
-      email: "noi"
+      email: "noi",
+      role: "normal"
     }
   ].each do |department|
     d = Department.find_or_create_by!(name: department[:name])
@@ -23,5 +31,6 @@
     User.find_or_create_by!(email: "#{department[:email].downcase}@yopmail.com") do |user|
       user.password = "password"
       user.department = d
+      user.role = department[:role]
     end
   end
