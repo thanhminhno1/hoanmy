@@ -5,7 +5,7 @@
 
   <div class="mb-3">
     <%= form.label :service_type, "Dịch Vụ", class: "form-label" %>
-    <%= form.select :service_type, options_for_select([["Chờ xác nhận", "normal"], ["Quốc tế từ đầu", "premium"]]), class: "form-select" %>
+    <%= form.select :service_type, options_for_select([["Chờ xác nhận", "normal"], ["Quốc tế từ đầu", "premium"]]), {}, {class: "form-select mb-3"} %>
   </div>
   
   <div class="mb-3">

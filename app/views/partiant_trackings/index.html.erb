@@ -47,18 +47,18 @@
         <td><%= partiant.insurance_confirm_time&.in_time_zone('Asia/Bangkok')&.strftime('%d/%m/%Y %H:%M') %></td>
         <td><%= partiant.assignee %></td>
         <td>
-          <%= 
-            case partiant.insurance_status
+          <% status_text, status_class = case partiant.insurance_status
             when "pending"
-              "Đang chờ"
+              ["Đang chờ", "badge bg-warning text-dark"]
             when "rejected"
-              "Từ chối bảo lãnh"
+              ["Từ chối bảo lãnh", "badge bg-danger"]
             when "confirmed"
-              "Được bảo lãnh"
+              ["Được bảo lãnh", "badge bg-success"]
             else
-              "Không xác định"
+              ["Không xác định", "badge bg-secondary"]
             end
           %>
+          <span class="<%= status_class %>"><%= status_text %></span>
         </td>
         <% if current_user.admin? %>
           <td>
